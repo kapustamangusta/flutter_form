@@ -74,9 +74,14 @@ class _ReqisterFormPageState extends State<ReqisterFormPage> {
                 labelText: 'Full Name *',
                 hintText: 'Как зовут-то тебя?',
                 prefixIcon: Icon(Icons.person),
-                suffixIcon: Icon(
-                  Icons.delete_outline,
-                  color: Colors.red,
+                suffixIcon: GestureDetector(
+                  onTap: (){
+                    _nameController.clear();
+                  },
+                  child: Icon(
+                    Icons.delete_outline,
+                    color: Colors.red,
+                  ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -109,9 +114,14 @@ class _ReqisterFormPageState extends State<ReqisterFormPage> {
                 hintText: 'Будь на связи',
                 helperText: '+7 (XXX)-XXX-XX-XX',
                 prefixIcon: Icon(Icons.call),
-                suffixIcon: Icon(
-                  Icons.delete_outline,
-                  color: Colors.red,
+                suffixIcon: GestureDetector(
+                  onLongPress: (){
+                    _phoneController.clear();
+                  },
+                  child: Icon(
+                    Icons.delete_outline,
+                    color: Colors.red,
+                  ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -253,7 +263,7 @@ class _ReqisterFormPageState extends State<ReqisterFormPage> {
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      print('FromIsValid');
+      _showDialog(name: _nameController.text);
       print('Name: ${_nameController.text}');
       print('Phone: ${_phoneController.text}');
       print('Email: ${_emailController.text}');
@@ -307,12 +317,48 @@ class _ReqisterFormPageState extends State<ReqisterFormPage> {
         content: Text(
           message!,
           style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w600,
-            fontSize: 18
-          ),
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 18),
         ),
       ),
+    );
+  }
+
+  void _showDialog({String name = ''}) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Поздравляем!',
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 18,
+              color: Colors.green,
+            ),
+          ),
+          content: Text(
+            '$name уже смешарик',
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 18,
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                'Трах Трахыч',
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 18,
+                ),
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 }
