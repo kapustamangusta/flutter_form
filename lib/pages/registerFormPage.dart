@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:form_example/pages/userIngoPage.dart';
+
+import '../model/user.dart';
 
 class ReqisterFormPage extends StatefulWidget {
   @override
@@ -25,6 +28,8 @@ class _ReqisterFormPageState extends State<ReqisterFormPage> {
   final _nameFocus = FocusNode();
   final _phoneFocus = FocusNode();
   final _passFocus = FocusNode();
+
+  User newUser = User();
 
   @override
   void dispose() {
@@ -99,6 +104,7 @@ class _ReqisterFormPageState extends State<ReqisterFormPage> {
                 ),
               ),
               validator: (val) => _validateName(val!),
+              onSaved: (value)=> newUser.name = value ?? "",
             ),
             SizedBox(
               height: 10,
@@ -147,6 +153,7 @@ class _ReqisterFormPageState extends State<ReqisterFormPage> {
               validator: (value) => _validatePhone(value!)
                   ? null
                   : 'Телефон должен быть в формате (XXX)XXX-XXXX',
+              onSaved: (value)=> newUser.phone = value ?? "",
             ),
             SizedBox(
               height: 10,
@@ -160,6 +167,7 @@ class _ReqisterFormPageState extends State<ReqisterFormPage> {
               ),
               keyboardType: TextInputType.emailAddress,
               validator: (value) => _validateEmail(value!),
+              onSaved: (value)=> newUser.email = value ?? "",
             ),
             SizedBox(
               height: 10,
@@ -183,6 +191,7 @@ class _ReqisterFormPageState extends State<ReqisterFormPage> {
                 });
               },
               value: _selectedCountry,
+              onSaved: (value)=> newUser.country = value ?? "",
             ),
             SizedBox(
               height: 10,
@@ -197,7 +206,8 @@ class _ReqisterFormPageState extends State<ReqisterFormPage> {
               maxLines: 3,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(100),
-              ],
+              ],onSaved: (value)=> newUser.story = value ?? "",
+              
             ),
             SizedBox(
               height: 10,
@@ -347,6 +357,10 @@ class _ReqisterFormPageState extends State<ReqisterFormPage> {
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context)=>UserInfoPage(user: newUser,)));
+                
               },
               child: Text(
                 'Трах Трахыч',
