@@ -21,7 +21,7 @@ class UserInfoPage extends StatelessWidget {
                 user.name,
                 style: TextStyle(fontWeight: FontWeight.w500),
               ),
-              subtitle: Text(user.story),
+              subtitle:user.story != '' ? Text(user.story) : null,
               leading: Icon(
                 Icons.person,
                 color: Colors.black,
@@ -40,7 +40,7 @@ class UserInfoPage extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            ListTile(
+            user.email!='' ? ListTile(
               title: Text(
                 user.email,
                 style: TextStyle(
@@ -51,7 +51,7 @@ class UserInfoPage extends StatelessWidget {
                 Icons.mail,
                 color: Colors.black,
               ),
-            ),
+            ) : ListTile(),
           ],
         ),
       ),

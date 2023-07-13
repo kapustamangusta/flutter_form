@@ -166,7 +166,7 @@ class _ReqisterFormPageState extends State<ReqisterFormPage> {
                 icon: Icon(Icons.mail),
               ),
               keyboardType: TextInputType.emailAddress,
-              validator: (value) => _validateEmail(value!),
+              //validator: (value) => _validateEmail(value!),
               onSaved: (value)=> newUser.email = value ?? "",
             ),
             SizedBox(
